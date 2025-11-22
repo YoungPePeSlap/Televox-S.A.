@@ -1,51 +1,65 @@
-:root{
-      --header-height: 64px;
-      --primary: #00264d;
-      --accent: #FF5722;
-      --secondary-accent: #1976D2; 
-      --dark: #001a33;
-	  --friendly-accent: #00bcd4;
-    }
-
-    * { box-sizing: border-box; }
-
-  body {
-      margin: 0;
-      font-family: "Times New Roman", serif;
-      background: #e6f0ff;
-      color: #333;
-      padding-top: var(--header-height);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-	  font-size:20px;
-    }
-
-    header {
-      background: var(--primary);
-      color: white;
-      padding: 0 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: var(--header-height);
-      z-index: 1000;
-    }
-
-    header img.logo {
-  /* Töröljük a felesleges és félrevezető 140%-os beállításokat. */
-  height: calc(var(--header-height) + 25px); /* 54px, ha a header 64px, így van egy kis padding is */
-  width: auto;                              /* Tartsa meg az arányokat */
-  max-width: 100%;
-  display: block;
-  object-fit: contain;                      /* Biztosítja, hogy az egész kép látszódjon */
+:root {
+    --header-height: 64px;
+    --primary: #00264d;
+    --accent: #FF5722;
+    --secondary-accent: #1976D2;
+    --dark: #001a33;
+    --friendly-accent: #00bcd4;
+    --bg-color: #e6f0ff;
 }
-	.hero {
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Times New Roman", serif;
+    background: var(--bg-color);
+    color: #333;
+    padding-top: var(--header-height);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 18px; /* Mobilon olvashatóbb az alapméret */
+    line-height: 1.6;
+}
+
+/* --- HEADER --- */
+header {
+    background: var(--primary);
+    color: white;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+header a {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+header img.logo {
+    max-height: 45px; /* Mobilon ne legyen túl nagy */
+    width: auto;
+    max-width: 100%;
+    display: block;
+    object-fit: contain;
+}
+
+/* --- HERO SZEKCIÓ --- */
+.hero {
     position: relative;
-    height: 70vh;
+    height: 40vh; /* Mobilon kisebb magasság elég */
+    min-height: 250px;
     color: white;
     text-align: center;
     display: flex;
@@ -54,61 +68,108 @@
     align-items: center;
     overflow: hidden;
     background-image: url("intro.png");
-    background-repeat: no-repeat; /* Megakadályozza az ismétlődést */
-    background-size: cover;      /* Kitölti a teljes elemet, megtartva az arányt */
-    background-position: center; /* Középre igazítja a képet */
-}
-	.hero .hero-content {
-		position: relative;
-		z-index: 2;
-		padding: 0 1rem;
-	}
-	.hero .hero-content h1{
-		font-size:50px;
-		font-family:roboto;
-	}
-	footer {
-      background: var(--dark);
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-    }
-	
- .services {
-  display: grid;
-  /* 3 egyenlő oszlopot hoz létre */
-  grid-template-columns: repeat(3, 1fr); 
-  /* Távolság az elemek között (vízszintesen és függőlegesen is) */
-  gap: 30px; 
-  padding: 4rem 2rem;
-  background: white;
-  /* Opcionális: maximális szélesség, hogy nagy monitoron ne nyúljon szét nagyon */
-  max-width: 100%;
-  margin: 0 auto; /* Középre igazítja az egész blokkot */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
-    .service {
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 10px; /* Lekerekített sarkok */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Finom árnyék */
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animáció */
-  
-  /* A flexbox tulajdonságokat törölhetjük, mert a szülő (grid) kezeli a méretet, 
-     kivéve ha a kártyán belüli tartalmat akarod igazítani */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Sötétítő réteg, hogy a szöveg olvasható legyen a képen */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 26, 51, 0.5);
+    z-index: 1;
 }
 
-/* Ez egy kis extra: ha ráviszed az egeret, kicsit megemelkedik */
+.hero .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 1rem;
+}
+
+.hero .hero-content h1 {
+    font-size: 36px; /* Mobilon kisebb betűméret */
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* --- SZOLGÁLTATÁSOK GRID (Lényeges rész) --- */
+.services {
+    display: grid;
+    /* Alapértelmezett: Mobil nézet -> 1 oszlop */
+    grid-template-columns: 1fr; 
+    gap: 30px;
+    padding: 2rem 1rem; /* Mobilon kisebb margó */
+    background: white;
+    max-width: 1200px; /* Hogy nagy monitoron ne legyen túl széles */
+    margin: 0 auto;
+}
+
+.service {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .service:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-    .service h3 {
-      color: var(--friendly-accent);
+.service h3 {
+    color: var(--friendly-accent);
+    font-size: 1.4rem;
+    margin-top: 0;
+}
+
+.service p {
+    text-align: justify; /* Hogy szépen mutasson a szövegblokk */
+    margin-bottom: 0;
+}
+
+/* --- FOOTER --- */
+footer {
+    background: var(--dark);
+    color: white;
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: auto;
+}
+
+/* --- MÉDIA LEKÉRDEZÉSEK (RESPONSIVE BREAKPOINTS) --- */
+
+/* Tablet nézet (600px felett) -> 2 oszlop */
+@media (min-width: 600px) {
+    .services {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 3rem 2rem;
     }
+}
+
+/* Desktop nézet (992px felett) -> 3 oszlop és nagyobb betűk */
+@media (min-width: 992px) {
+    body {
+        font-size: 20px; /* Vissza az eredeti nagy betűhöz PC-n */
+    }
+
+    .hero {
+        height: 70vh; /* Eredeti nagy hero PC-n */
+    }
+
+    .hero .hero-content h1 {
+        font-size: 50px; /* Eredeti nagy cím */
+    }
+    
+    .services {
+        grid-template-columns: repeat(3, 1fr); /* Vissza a 3 oszlophoz */
+        padding: 4rem 2rem;
+    }
+}
