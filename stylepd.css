@@ -1,51 +1,65 @@
-:root{
-      --header-height: 64px;
-      --primary: #00264d;
-      --accent: #FF5722;
-      --secondary-accent: #1976D2; 
-      --dark: #001a33;
-	  --friendly-accent: #00bcd4;
-    }
-
-    * { box-sizing: border-box; }
-
-  body {
-      margin: 0;
-      font-family: "Times New Roman", serif;
-      background: #e6f0ff;
-      color: #333;
-      padding-top: var(--header-height);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-	  font-size:25px;
-    }
-
-    header {
-      background: var(--primary);
-      color: white;
-      padding: 0 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: var(--header-height);
-      z-index: 1000;
-    }
-
-    header img.logo {
-  /* Töröljük a felesleges és félrevezető 140%-os beállításokat. */
-  height: calc(var(--header-height) + 25px); /* 54px, ha a header 64px, így van egy kis padding is */
-  width: auto;                              /* Tartsa meg az arányokat */
-  max-width: 100%;
-  display: block;
-  object-fit: contain;                      /* Biztosítja, hogy az egész kép látszódjon */
+:root {
+    --header-height: 64px;
+    --primary: #00264d;
+    --accent: #FF5722;
+    --secondary-accent: #1976D2;
+    --dark: #001a33;
+    --friendly-accent: #00bcd4;
+    --bg-color: #e6f0ff;
 }
-	.hero {
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Times New Roman", serif;
+    background: var(--bg-color);
+    color: #333;
+    padding-top: var(--header-height);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Alapból kisebb betűméret mobilon, hogy olvasható legyen */
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* --- HEADER --- */
+header {
+    background: var(--primary);
+    color: white;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+header a {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+header img.logo {
+    /* A logó magassága ne lógjon ki csúnyán, de maradjon látható */
+    max-height: 50px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* --- HERO SZEKCIÓ --- */
+.hero {
     position: relative;
-    height: 40vh;
+    height: 40vh; /* Mobilon lehet kisebb */
+    min-height: 250px; /* Hogy ne legyen túl lapos */
     color: white;
     text-align: center;
     display: flex;
@@ -53,44 +67,116 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    background-image: url("PDC.jpg");
-    background-repeat: no-repeat; /* Megakadályozza az ismétlődést */
-    background-size: cover;      /* Kitölti a teljes elemet, megtartva az arányt */
-    background-position: center; /* Középre igazítja a képet */
+    /* Feltételezve, hogy a kép ugyanabban a mappában van */
+    background-image: url("PDC.jpg"); 
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
-	.hero .hero-content {
-		position: relative;
-		z-index: 2;
-		padding: 0 1rem;
-	}
-	.hero .hero-content h1{
-		font-size:50px;
-		font-family:roboto;
-	}
-	footer {
-      background: var(--dark);
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-    }
-	.politica
-	{
-	flex: 1 1;
-	height:100%;
-	background: #e6f0ff;
-	}
-	.politica-container {
+
+/* Sötétítés a háttérképen, hogy a fehér szöveg olvasható legyen */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    background: rgba(0, 38, 77, 0.6); /* Kékes sötétítés */
+    z-index: 1;
+}
+
+.hero .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 1rem;
+}
+
+.hero .hero-content h1 {
+    font-size: 32px; /* Mobilon kisebb cím */
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* --- TARTALOM (POLITICA) --- */
+.politica {
+    background: var(--bg-color);
+    padding: 20px 0;
+    min-height: calc(100vh - 40vh - 100px); /* Hogy kitöltse a teret */
+}
+
+.politica-container {
     display: flex;
-    align-items: flex-start;
+    flex-direction: column; /* Mobilon egymás alatt */
     gap: 2rem;
+    width: 100%;
+    max-width: 1200px; /* Hogy ne folyjon szét nagy monitoron */
+    margin: 0 auto;
+    padding: 0 20px; /* Margó a széleken */
 }
 
 .politica-text {
-    flex: 3;
+    width: 100%;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
-.politica-img img {
-    width: 150px; /* méret amit akarsz */
-    height: auto;
+.politica-text h2 {
+    font-size: 1.5rem;
+    color: var(--primary);
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.politica-text h3 {
+    color: var(--secondary-accent);
+    margin-top: 1.5rem;
+}
+
+.politica-text ul {
+    padding-left: 20px;
+}
+
+.politica-text li {
+    margin-bottom: 10px;
+}
+
+/* --- FOOTER --- */
+footer {
+    background: var(--dark);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: auto;
+    font-size: 16px;
+}
+
+/* --- RESZPONZÍV BEÁLLÍTÁSOK (TABLET ÉS DESKTOP) --- */
+@media (min-width: 768px) {
+    body {
+        font-size: 20px; /* Nagyobb betűméret asztali gépen */
+    }
+
+    .hero {
+        height: 50vh; /* Magasabb hero asztalin */
+    }
+
+    .hero .hero-content h1 {
+        font-size: 50px; /* Eredeti nagy cím visszaállítása */
+    }
+
+    .politica-container {
+        flex-direction: row; /* Visszaállítás sorba rendezésre, ha lenne kép */
+        align-items: flex-start;
+    }
+    
+    /* Ha később visszakerülne a kép (.politica-img), itt kezeljük */
+    .politica-img img {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+    }
 }
